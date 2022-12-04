@@ -1,24 +1,12 @@
-import React, { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from "./axios.js"
-import './Row.css'
+import React,{useContext,useState,useEffect} from 'react'
+import {Link} from 'react-router-dom'
 const base_url="https://image.tmdb.org/t/p/original/";
-function Row({ title,fetchUrl,isLarge}){
-    const [movies, setMovies]=useState([]);
-    useEffect(()=>{
-        async function fetchData(){
-            const request=await axios.get(fetchUrl);
-            setMovies(request.data.results);
-            return request;
-        }
-        fetchData();
-    },[fetchUrl])
-
+const Mylist = (props) => {
     return (
         <div className='row'>
-            <h2>{title}</h2>
+            <h1 className='title'>favourite movies</h1>
             <div className="posters">
-                {movies.map(movie=>(
+                {props.user.likedMovies.map(movie=>(
                     //`'/Movie:${movie?.title||movie?.name||movie?.original_name}'`
                     <Link to='/Movie' state={movie}>
                         <img key={movie.id} 
@@ -31,4 +19,5 @@ function Row({ title,fetchUrl,isLarge}){
         </div>
     )
 }
-export default Row;
+
+export default Mylist;
